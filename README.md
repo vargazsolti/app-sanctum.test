@@ -149,7 +149,7 @@ A complete **Postman Collection** (`Sanctum SPA API v1.postman_collection.json`)
 
 ## 🧠 Notes
 
-- Default `.htaccess` and Sanctum middleware setup included.  
+- Sanctum middleware setup included.  
 - Works seamlessly with **WAMP/XAMPP** or `php artisan serve`.  
 - Perfect base for building SPA backends using **Vue**, **React**, or **Inertia**.  
 - Clean and consistent API response structure for all endpoints.
