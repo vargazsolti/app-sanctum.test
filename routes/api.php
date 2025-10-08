@@ -11,7 +11,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [MeController::class, 'index'])->name('api.v1.me.index');
         Route::get('/me/show', [MeController::class, 'show'])->name('api.v1.me.show');
-
+        Route::put('/me', [MeController::class, 'update'])->name('api.v1.me.update');
+        
         Route::get('/auth/tokens', [TokenController::class, 'index'])->name('api.v1.auth.tokens.index');
         Route::get('/auth/tokens/{id}', [TokenController::class, 'show'])->name('api.v1.auth.tokens.show');
         Route::put('/auth/tokens/{id}', [TokenController::class, 'update'])->name('api.v1.auth.tokens.update');

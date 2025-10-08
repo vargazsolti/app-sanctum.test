@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import ProfileEdit from '@/pages/profile/ProfileEdit.vue'
 import Login from '@/pages/auth/Login.vue'
 import Dashboard from '@/pages/Dashboard.vue'
 
@@ -12,11 +13,11 @@ const routes = [
   { path: '/submenu3', name: 'submenu3', component: Dashboard, meta:{requiresAuth:true}},
   { path: '/submenu4', name: 'submenu4', component: Dashboard, meta:{requiresAuth:true}},
   { path: '/submenu5', name: 'submenu5', component: Dashboard, meta:{requiresAuth:true}},
-  
+
   { path: '/othersubmenu1', name: 'othersubmenu1', component: Dashboard, meta:{requiresAuth:true}},
   { path: '/othersubmenu2', name: 'othersubmenu2', component: Dashboard, meta:{requiresAuth:true}},
 
-
+{ path: '/profile', name: 'profile', component: ProfileEdit, meta: { requiresAuth: true } },
 
     // új stubok
   { path: '/notifications', name: 'notifications', component: Dashboard, meta: { requiresAuth: true } },

@@ -63,46 +63,40 @@ const props = defineProps({
 
 const route = useRoute()
 
-// Mi van nyitva?
+// Nyitott főszekció(k) – mostantól egyszerre max. 1
 const open = ref(new Set())
-// Mit csukott be a felhasználó kézzel? (ezeket nem nyitjuk vissza automatikusan)
-const collapsed = ref(new Set())
 
 function isOpen(key) {
   return open.value.has(key)
 }
 
+// Kattintás a főmenüre: kizárólag azt nyitjuk (toggle-oljuk)
 function toggle(key) {
-  const o = new Set(open.value)
-  const c = new Set(collapsed.value)
-
-  if (o.has(key)) {
-    // user kézzel csukja
-    o.delete(key)
-    c.add(key)
-  } else {
-    // user kézzel nyitja
-    o.add(key)
-    c.delete(key)
-  }
-  open.value = o
-  collapsed.value = c
+  const currentlyOpen = isOpen(key)
+  open.value = currentlyOpen ? new Set() : new Set([key])
 }
 
-// Auto-nyitás: csak akkor, ha NINCS a user által becsukott listában
+// Route alapján automatikusan csak az aktuális szekció maradjon nyitva
 watchEffect(() => {
   const current = route.name
-  props.items.forEach(sec => {
-    const inDirect = (sec.children || []).some(c => c.name === current)
-    const inGroup = (sec.groups || []).some(g => (g.children || []).some(i => i.name === current))
+  let activeKey = null
 
-    if ((inDirect || inGroup) && !collapsed.value.has(sec.key)) {
-      open.value.add(sec.key)
+  for (const sec of props.items) {
+    const inDirect = (sec.children || []).some(c => c.name === current)
+    const inGroup  = (sec.groups || []).some(g => (g.children || []).some(i => i.name === current))
+    if (inDirect || inGroup) {
+      activeKey = sec.key
+      break
     }
-    // (nem csukjuk automatikusan, csak nyitunk)
-  })
+  }
+
+  if (activeKey) {
+    open.value = new Set([activeKey])
+  }
+  // ha nincs aktív szekció (pl. dashboard), meghagyjuk a jelenlegi állapotot
 })
 </script>
+
 
 <style scoped>
 .menu-group {

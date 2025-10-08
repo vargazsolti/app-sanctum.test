@@ -154,8 +154,8 @@ async function onLogout() {
 }
 
 // A navigációs helykötések – majd később valódi oldalakra vihetnek:
-function goProfile() { /* router.push({ name: 'profile' }) */ }
-function goEditProfile() { /* router.push({ name: 'profile.edit' }) */ }
+function goProfile() { router.push({ name: 'profile' }) }
+function goEditProfile() { router.push({ name: 'profile' }) }
 function goTimesheets() { /* router.push({ name: 'timesheets' }) */ }
 function openLanguage() { /* pl. később nyitsz egy language modal-t */ }
 </script>

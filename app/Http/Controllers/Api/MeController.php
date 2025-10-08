@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Me\ShowRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\Me\UpdateRequest;
 
 class MeController extends Controller
 {
@@ -51,15 +52,7 @@ class MeController extends Controller
         return $this->index($request);
     }
 
-    /** PUT /me – nem támogatott */
-    public function update(Request $request)
-    {
-        return response()->json([
-            'success' => false,
-            'data'    => (object)[],
-            'message' => 'Not supported.',
-        ], 405);
-    }
+    
 
     /** DELETE /me – nem támogatott */
     public function destroy(Request $request)
@@ -70,4 +63,31 @@ class MeController extends Controller
             'message' => 'Not supported.',
         ], 405);
     }
+
+    public function update(UpdateRequest $request): JsonResponse
+{
+    $user = $request->user();
+
+    $user->name  = $request->input('name', $user->name);
+    $user->email = $request->input('email', $user->email);
+
+    if ($request->filled('password')) {
+        $user->password = \Illuminate\Support\Facades\Hash::make($request->input('password'));
+    }
+
+    $user->save();
+
+    return response()->json([
+        'success' => true,
+        'data'    => [
+            'user' => [
+                'id'    => $user->id,
+                'name'  => $user->name,
+                'email' => $user->email,
+            ],
+        ],
+        'message' => 'Profile updated.',
+    ]);
+}
+
 }
