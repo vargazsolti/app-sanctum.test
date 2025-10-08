@@ -1,0 +1,25 @@
+{
+  "common": {
+    "language": "Nyelv",
+    "logout": "Kijelentkezés",
+    "settings": "Beállítások",
+    "profile": "Profilom"
+  },
+  "nav": {
+    "dashboard": "Irányítópult",
+    "customers": "Ügyfelek",
+    "leads": "Leads",
+    "tasks": "Feladatok",
+    "sales": "Értékesítés",
+    "subscriptions": "Előfizetések"
+  },
+  "auth": {
+    "sign_in": "Bejelentkezés",
+    "email": "E-mail",
+    "password": "Jelszó"
+  },
+  "dashboard": {
+    "title": "Irányítópult",
+    "logged_in_as": "{name} néven vagy bejelentkezve."
+  }
+}

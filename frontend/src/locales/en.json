@@ -1,0 +1,25 @@
+{
+  "common": {
+    "language": "Language",
+    "logout": "Logout",
+    "settings": "Settings",
+    "profile": "My Profile"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "leads": "Leads",
+    "tasks": "Tasks",
+    "sales": "Sales",
+    "subscriptions": "Subscriptions"
+  },
+  "auth": {
+    "sign_in": "Sign in",
+    "email": "Email",
+    "password": "Password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "logged_in_as": "You're logged in as {name}."
+  }
+}
