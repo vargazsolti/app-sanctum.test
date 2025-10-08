@@ -1,29 +1,29 @@
-# 🧭 EroPortal / App-Sanctum Frontend & Backend Fejlesztési Napló
-**Dátum:** 2025-10-08  
+# 🧭 App-Sanctum Frontend & Backend Development Log
+**Date:** 2025-10-08  
 **Stack:** Laravel 12 + Sanctum (API) & Vue 3 + Vite + Tailwind + shadcn-vue (Frontend)
 
 ---
 
-## 📅 Mai fejlesztések összefoglalója
+## 📅 Summary of Today’s Development
 
 ### 🧩 Backend
 
-#### ✅ Új profil frissítő endpoint
-Létrehoztuk a hitelesített felhasználó saját adatainak frissítésére szolgáló route-ot:
+#### ✅ New Profile Update Endpoint
+Created a route for updating the authenticated user’s own profile data:
 ```
 PUT /api/v1/me
 ```
 
-**Fájlok:**
-- `routes/api.php` → új `Route::put('/me', [MeController::class, 'update'])`
-- `app/Http/Controllers/Api/MeController.php` → új `update()` metódus  
-- `app/Http/Requests/Api/Me/UpdateRequest.php` → validáció (név, email, jelszó)
+**Files:**
+- `routes/api.php` → new `Route::put('/me', [MeController::class, 'update'])`
+- `app/Http/Controllers/Api/MeController.php` → new `update()` method  
+- `app/Http/Requests/Api/Me/UpdateRequest.php` → validation (name, email, password)
 
-**Működés:**
-- csak bejelentkezett (`auth:sanctum`) user használhatja  
-- frissíthető: `name`, `email`, `password` (opcionális, `confirmed` kell)  
-- jelszó csak akkor változik, ha a mező kitöltött  
-- visszatérési struktúra:
+**Behavior:**
+- only accessible by authenticated (`auth:sanctum`) users  
+- updatable fields: `name`, `email`, `password` (optional, must be `confirmed`)  
+- password only changes if the field is filled  
+- response structure:
 ```json
 {
   "success": true,
@@ -36,65 +36,65 @@ PUT /api/v1/me
 
 ### 🎨 Frontend
 
-#### ✅ Profil szerkesztő oldal
-Új oldal: `src/pages/profile/ProfileEdit.vue`
+#### ✅ Profile Edit Page
+New page: `src/pages/profile/ProfileEdit.vue`
 
-**Funkciók:**
-- Név, e-mail, új jelszó + jelszó megerősítés mezők  
-- Opcionális jelszóváltoztatás (ha üres, marad a régi)  
-- Hiba- és sikerüzenetek (validáció, backend válasz)  
-- Mentés után az auth store frissül az új adatokkal
+**Features:**
+- Fields for name, email, new password + password confirmation  
+- Optional password change (keeps old one if empty)  
+- Error & success messages (validation, backend response)  
+- After saving, the auth store updates with new data
 
-**API-hívás:**  
+**API Call:**  
 `PUT /api/v1/me`
 
 ---
 
-#### ✅ Header bővítés
-A jobb felső sarokban mostantól:
-- 🌐 `LanguageSwitcher` (EN / HU váltás, lazy-loaded i18n JSON-okkal)
-- 🔔 `Notifications` link (badge-jelző, későbbi API integrációhoz)
-- ⚙️ `Settings` link (rendszerbeállítások oldal)
+#### ✅ Header Enhancements
+Top-right section now includes:
+- 🌐 `LanguageSwitcher` (EN / HU toggle with lazy-loaded i18n JSON files)
+- 🔔 `Notifications` link (with badge placeholder for future API integration)
+- ⚙️ `Settings` link (system settings page)
 
-Mindkettő `RouterLink`-ként működik, nem dropdown.
-
----
-
-#### ✅ Sidebar fejlesztés
-- Többszintű menü (`SidebarMenu.vue`)
-- Automatikus **összecsukás**, ha másik főmenübe navigálsz  
-- Egyszerre **csak egy főmenü lehet nyitva**
-- Route alapján automatikusan megnyílik az aktív szekció  
-- Felhasználó kézi becsukását is tiszteletben tartja  
+Both implemented as `RouterLink` (no dropdown).
 
 ---
 
-#### ✅ i18n rendszer (lazy load)
-- `vue-i18n@9` integrálva  
-- Nyelvek JSON-fájlokban (`src/locales/en.json`, `src/locales/hu.json`)  
-- Dinamikus, lazy betöltés: csak az aktuális nyelv chunkja töltődik le  
-- `LanguageSwitcher.vue` menti a választást `localStorage`-ba  
-- Alap nyelv: `hu`, fallback: `en`
+#### ✅ Sidebar Improvements
+- Multi-level menu (`SidebarMenu.vue`)
+- Automatically **collapses** when navigating to another main menu  
+- Only **one main section** can be open at once  
+- Opens automatically based on active route  
+- Respects manual user collapse actions  
 
 ---
 
-### 💾 Általános állapot
+#### ✅ i18n System (lazy load)
+- Integrated `vue-i18n@9`  
+- Language files stored in JSON (`src/locales/en.json`, `src/locales/hu.json`)  
+- Dynamic lazy loading: only current language chunk is downloaded  
+- `LanguageSwitcher.vue` saves selection to `localStorage`  
+- Default language: `hu`, fallback: `en`
 
-| Modul | Készültség | Megjegyzés |
+---
+
+### 💾 General Project Status
+
+| Module | Status | Notes |
 |--------|-------------|------------|
-| Auth flow (login/logout/me) | ✅ | teljes Sanctum integráció |
-| Sidebar navigáció | ✅ | multi-level, auto-collapse |
-| Header UI | ✅ | nyelvváltó + ikon linkek |
-| i18n (lazy JSON) | ✅ | működik két nyelvvel |
-| Profile szerkesztés | ✅ | backend PUT + frontend form |
-| Customers CRUD | 🚧 | következő fejlesztési fázis |
-| Notifications API | 🚧 | UI előkészítve |
-| Settings oldal | 🚧 | UI előkészítve |
-| Dark mode / theme | ⏳ | tervezett |
+| Auth flow (login/logout/me) | ✅ | full Sanctum integration |
+| Sidebar navigation | ✅ | multi-level, auto-collapse |
+| Header UI | ✅ | language switch + icon links |
+| i18n (lazy JSON) | ✅ | works with two languages |
+| Profile editing | ✅ | backend PUT + frontend form |
+| Customers CRUD | 🚧 | next phase of development |
+| Notifications API | 🚧 | UI prepared |
+| Settings page | 🚧 | UI prepared |
+| Dark mode / theme | ⏳ | planned |
 
 ---
 
-## 🧰 Projekt struktúra (összefoglaló)
+## 🧰 Project Structure (Summary)
 
 **Frontend:**  
 ```
@@ -125,22 +125,6 @@ routes/api.php
 
 ---
 
-## 🚀 Következő lépések (javaslat)
-
-1. **CRUD modul – Customers**
-   - `Customer` modell + factory + seeder  
-   - `Api/CustomerController` (`index`, `store`, `show`, `update`, `destroy`)  
-   - Vue oldalak (`CustomerList`, `CustomerForm`, `CustomerShow`)
-2. **Értesítések (Notifications)**
-   - API: `GET /api/v1/notifications`  
-   - Unread counter a headerben
-3. **Settings oldal**
-   - App preferences, theme, language defaults
-4. **Dark mode / theme switcher**
-   - Tailwind `dark:` és shadcn alapú theme toggle
-
----
-
-📘 **Státusz:**  
-> A rendszer már teljes auth, profil és UI kerettel rendelkezik.  
-> Innen a CRUD és moduláris API-fejlesztés jön (Customers, Tasks, Notifications).
+📘 **Status:**  
+> The system already includes full authentication, profile management, and UI framework.  
+> Next steps: CRUD and modular API development (Customers, Tasks, Notifications).
